@@ -1,0 +1,23 @@
+.chart-container {
+  padding: 30px;
+  background-color: #17263c;
+}
+
+.card {
+  background-color: #1a2335;
+  /*background-color: #101d2f;*/
+  margin: 20px 0;
+}
+
+.card-content {
+  background-color: #1a2335;
+  background-color: #101d2f;
+}
+
+.card-title {
+  color: #d59563;
+}
+
+.card-subtitle {
+  color: #746855;
+}

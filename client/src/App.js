@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
-import GoogleMapContainer from './mapContainer/GoogleMapContainer'
 import { csv } from 'd3'
+
+import GoogleMapContainer from './mapContainer/GoogleMapContainer'
+import ChartsContainer from './charts/ChartsContainer'
+import TimerController from './timeController/TimerController'
 
 import './app.css'
 
@@ -31,8 +34,14 @@ export default class App extends Component {
   render() {
     const { airPollutionData } = this.state
     return (
-      <div className="App">
-        <GoogleMapContainer airPollutionData={airPollutionData} />
+      <div className="app">
+        <div className="map">
+          <GoogleMapContainer airPollutionData={airPollutionData} />
+        </div>
+        <div className="charts">
+          <ChartsContainer />
+        </div>
+        <TimerController />
       </div>
     )
   }
