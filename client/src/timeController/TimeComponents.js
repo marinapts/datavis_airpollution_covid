@@ -25,7 +25,7 @@ const railInnerStyle = {
   transform: "translate(0%, -50%)",
   borderRadius: 4,
   pointerEvents: "none",
-  backgroundColor: "rgb(155,155,155)"
+  backgroundColor: "#426361"
 };
 
 export function SliderRail({ getRailProps }) {
@@ -81,7 +81,7 @@ export function Handle({
           height: 20,
           borderRadius: "50%",
           boxShadow: "1px 1px 1px 1px rgba(0, 0, 0, 0.3)",
-          backgroundColor: disabled ? "#666" : "#333"
+          backgroundColor: disabled ? "#666" : "#35d8d0"
         }}
       />
     </Fragment>
@@ -114,7 +114,7 @@ export function Track({ source, target, getTrackProps, disabled }) {
         transform: "translate(0%, -50%)",
         height: 8,
         zIndex: 1,
-        backgroundColor: disabled ? "#999" : "#444",
+        backgroundColor: disabled ? "#999" : "#35d8d0",
         borderRadius: 4,
         cursor: "pointer",
         left: `${source.percent}%`,
@@ -164,7 +164,6 @@ export function Tick({ tick, count, format }) {
         style={{
           position: "absolute",
           marginTop: 22,
-          fontSize: 10,
           textAlign: "center",
           fontFamily: "Arial, san-serif",
           marginLeft: `${-(100 / count) / 2}%`,

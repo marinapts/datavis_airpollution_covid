@@ -26,15 +26,19 @@ export default class TimeController extends Component {
       let [month, day] = d.split('/')
       return `${month}/${day}`
     })
-    console.log(dates)
 
-    this.setState({ dates })
+    this.setState({ dates }, () => {
+      this.onDateUpdate([0])  // select 1st day by default
+    })
   }
 
   onDateUpdate = dateIndex => {
     const date = this.state.dates[dateIndex[0]];
     const readable = this.readableDate(date);
-    this.setState({ updated: readable });
+    this.setState({ updated: readable }, () => {
+      const selectedDay = `${date}/20`
+      this.props.setSelectedDay(selectedDay)
+    });
   };
 
   readableDate = date => {
@@ -68,7 +72,7 @@ export default class TimeController extends Component {
               step={1}
               domain={[0, dates.length-1]}
               onUpdate={this.onDateUpdate}
-              values={[50]}
+              values={[0]}
             >
               <Rail>
                 {({ getRailProps }) => <SliderRail getRailProps={getRailProps} />}

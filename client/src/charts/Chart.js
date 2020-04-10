@@ -1,38 +1,50 @@
 import React, { Component } from 'react'
-import { LineChart, Line, BarChart, Bar, CartesianGrid, XAxis, YAxis, Tooltip, Legend } from 'recharts'
-import Card from '@material-ui/core/Card'
-import { CardContent, Typography } from '@material-ui/core'
+import PropTypes from 'prop-types'
+import { Card, CardContent, Typography } from '@material-ui/core'
+import { Bar } from 'react-chartjs-2'
+import ChartDataLabels from 'chartjs-plugin-datalabels'
 
 import './chart.scss'
 
-export default class ChartsContainer extends Component {
+export default class Chart extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      airPollutionData: [],
-      width: 500,
-      height: 200
-    }
+    this.state = {}
   }
 
-
   render() {
-    const { width, height } = this.state
-    const { type } = this.props
-    const lineData = [
-      {name: 'Page A', uv: 400, pv: 2400, amt: 2400},
-      {name: 'Page B', uv: 200, pv: 3000, amt: 1500},
-      {name: 'Page C', uv: 800, pv: 2100, amt: 2500},
-    ];
-    const barData = [
-      {name: 'Page A', uv: 4000, pv: 2400, amt: 2400},
-      {name: 'Page B', uv: 3000, pv: 1398, amt: 2210},
-      {name: 'Page C', uv: 2000, pv: 9800, amt: 2290},
-      {name: 'Page D', uv: 2780, pv: 3908, amt: 2000},
-      {name: 'Page E', uv: 1890, pv: 4800, amt: 2181},
-      {name: 'Page F', uv: 2390, pv: 3800, amt: 2500},
-      {name: 'Page G', uv: 3490, pv: 4300, amt: 2100},
-    ];
+    const { data, type } = this.props
+    console.log('chart', data ? Object.values(data).map(d => d.confirmed) : data)
+    let labels = ['']
+    let dataPoints = []
+
+    if (data) {
+      labels = Object.keys(data)
+      dataPoints = Object.values(data).map(d => d.confirmed)
+    }
+
+    console.log('labels', labels)
+    console.log('dataPoints', dataPoints)
+
+    const chartData = {
+        labels,
+        datasets: [{
+          label: "My First dataset",
+          backgroundColor: 'white',
+          borderColor: 'white',
+          data: dataPoints
+        }]
+    }
+
+    const options = {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
 
     return (
       <Card className="card">
@@ -40,28 +52,22 @@ export default class ChartsContainer extends Component {
           <Typography variant="h5" component="h2" className="card-title">
             Active Cases
           </Typography>
-          <Typography className="card-subtitle">adjective</Typography>
-          {type === 'line' ?
-            <LineChart width={width} height={height} data={lineData}>
-              <Line type="monotone" dataKey="uv" stroke="#8884d8" />
-              <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-            </LineChart> :
-
-            <BarChart width={width} height={height} data={barData}>
-              <CartesianGrid strokeDasharray="3 3"/>
-              <XAxis dataKey="name"/>
-              <YAxis/>
-              <Tooltip/>
-              <Legend />
-              <Bar dataKey="pv" fill="#8884d8" />
-              <Bar dataKey="uv" fill="#82ca9d" />
-            </BarChart>
+          <Typography className="card-subtitle">subtitle</Typography>
+          {chartData.labels.length &&
+            <Bar
+              data={chartData}
+              options={options}
+              plugins={[ChartDataLabels]}
+            />
           }
+
         </CardContent>
       </Card>
     )
   }
+}
+
+Chart.propTypes = {
+  data: PropTypes.object, // data for a selected day
+  type: PropTypes.string  // chart type
 }

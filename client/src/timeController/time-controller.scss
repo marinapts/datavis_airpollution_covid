@@ -1,23 +1,5 @@
 @import '../variables.scss';
 
-.MuiSlider-colorPrimary, .MuiSlider-root {
-  /*background-color: red;*/
-  /*color: yellow;*/
-}
-
-.MuiSlider-rail, .MuiSlider-track {
-  color: $slider;
-  min-height: 3px;
-}
-
-.MuiSlider-mark, .MuiSlider-markLabel, .MuiSlider-markLabelActive {
-  color: $slider !important;
-}
-
-.MuiSlider-root {
-  color: $primaryColor !important;
-}
-
 .slider-container {
   position: relative;
   margin: 60px;

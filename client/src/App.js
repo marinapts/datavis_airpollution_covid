@@ -4,7 +4,7 @@ import { csv } from 'd3'
 import GoogleMapContainer from './mapContainer/GoogleMapContainer'
 import ChartsContainer from './charts/ChartsContainer'
 import TimeController from './timeController/TimeController'
-import covidData from './data/covid'
+import covid from './data/covid'
 
 import './app.scss'
 
@@ -13,39 +13,46 @@ export default class App extends Component {
     super(props)
     this.state = {
       airPollutionData: [],
-      covidData: []
+      covidData: covid,
+      selectedDay: ''
     }
   }
 
   componentDidMount() {
     this.getAirPollutionData()
-    this.getCovidData()
   }
 
   getAirPollutionData = async () => {
     const data = await csv('data/air_pollution_it.csv')
-    // const data = await csv('data/test.csv')
     const airPollutionData = data.map(row => ({
       lat: parseFloat(row.LatitudeOfMeasurementStation),
       lng: parseFloat(row.LongitudeOfMeasurementStation),
       // quality: parseFloat(row.AirQualityLevel)
     }))
-    console.log('airPollutionData', airPollutionData)
     this.setState({ airPollutionData })
   }
 
-  getCovidData = () => this.setState({ covidData })
+  setSelectedDay = selectedDay => {
+    this.setState({ selectedDay })
+  }
 
   render() {
-    const { airPollutionData } = this.state
+    const { airPollutionData, covidData, selectedDay } = this.state
+    console.log('airPollutionData', airPollutionData)
+    console.log('covidData', covidData)
+
     return (
       <div className="app">
         <div className="data-area">
-          <GoogleMapContainer className="map" airPollutionData={airPollutionData} />
-          <ChartsContainer className="charts" data={covidData} />
+          <div className="map">
+            <GoogleMapContainer airPollutionData={airPollutionData} />
+          </div>
+          <div className="charts">
+            <ChartsContainer covidData={covidData} selectedDay={selectedDay} />
+          </div>
         </div>
         <div className="time-controller">
-          <TimeController data={covidData} />
+          <TimeController data={covidData} setSelectedDay={this.setSelectedDay} />
         </div>
       </div>
     )
