@@ -3,20 +3,23 @@ import { csv } from 'd3'
 
 import GoogleMapContainer from './mapContainer/GoogleMapContainer'
 import ChartsContainer from './charts/ChartsContainer'
-import TimerController from './timeController/TimerController'
+import TimeController from './timeController/TimeController'
+import covidData from './data/covid'
 
-import './app.css'
+import './app.scss'
 
 export default class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      airPollutionData: []
+      airPollutionData: [],
+      covidData: []
     }
   }
 
   componentDidMount() {
     this.getAirPollutionData()
+    this.getCovidData()
   }
 
   getAirPollutionData = async () => {
@@ -31,17 +34,19 @@ export default class App extends Component {
     this.setState({ airPollutionData })
   }
 
+  getCovidData = () => this.setState({ covidData })
+
   render() {
     const { airPollutionData } = this.state
     return (
       <div className="app">
-        <div className="map">
-          <GoogleMapContainer airPollutionData={airPollutionData} />
+        <div className="data-area">
+          <GoogleMapContainer className="map" airPollutionData={airPollutionData} />
+          <ChartsContainer className="charts" data={covidData} />
         </div>
-        <div className="charts">
-          <ChartsContainer />
+        <div className="time-controller">
+          <TimeController data={covidData} />
         </div>
-        <TimerController />
       </div>
     )
   }

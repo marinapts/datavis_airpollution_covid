@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import { LineChart, Line, BarChart, Bar, CartesianGrid, XAxis, YAxis, Tooltip, Legend } from 'recharts'
 import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
-import Typography from '@material-ui/core/Typography'
+import { CardContent, Typography } from '@material-ui/core'
 
-import './chart.css'
+import './chart.scss'
 
 export default class ChartsContainer extends Component {
   constructor(props) {

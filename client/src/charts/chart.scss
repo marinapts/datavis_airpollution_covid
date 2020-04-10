@@ -1,0 +1,30 @@
+@import '../variables.scss';
+
+.chart-container {
+  padding: 0 20px;
+  /*background-color: #17263c;*/
+  background-color: $background;
+}
+
+.card {
+  /*background-color: #1a2335;*/
+  /*background-color: #101d2f;*/
+  background-color: $cardBackground;
+  margin: 20px 0;
+}
+
+.card-content {
+  /*background-color: #1a2335;
+  background-color: #101d2f;*/
+  background-color: $cardBackground;
+}
+
+.card-title {
+  /*color: #d59563;*/
+  color: $primaryColor;
+}
+
+.card-subtitle {
+  /*color: #746855;*/
+  color: $secondaryColor;
+}
