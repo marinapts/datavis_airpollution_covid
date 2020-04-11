@@ -7,31 +7,20 @@ export default class ChartsContainer extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      covidDataForDay: {}  // object containing data for each country
+      covidDataForDay: {},  // object containing data for each country
     }
   }
 
-  componentDidMount() {
-    this.setDataForSelectedDay()
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.props.selectedDay !== prevProps.selectedDay) {
-      this.setDataForSelectedDay()
-    }
-  }
-
-  setDataForSelectedDay = () => {
-    const { covidData, selectedDay } = this.props
-    const covidDataForDay = covidData[selectedDay]
-    this.setState({ covidDataForDay })
-  }
+  // setDataForSelectedDay = (update=false) => {
+  //   const { covidData, selectedDay } = this.props
+  //   const covidDataForDay = covidData[selectedDay]
+  //   this.setState({ covidDataForDay, dayUpdated: update })
+  // }
 
   render() {
-    const { covidDataForDay } = this.state
     return (
       <div className="chart-container">
-        <Chart data={covidDataForDay} type="line" />
+        <Chart data={this.props.covidData} type="line" />
       </div>
     )
   }

@@ -1,20 +1,17 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Card, CardContent, Typography } from '@material-ui/core'
-import { Bar } from 'react-chartjs-2'
+import { Bar, defaults } from 'react-chartjs-2'
 import ChartDataLabels from 'chartjs-plugin-datalabels'
 
 import './chart.scss'
 
-export default class Chart extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {}
-  }
+// Disable animating charts by default.
+// defaults.global.animation = false
 
+export default class Chart extends Component {
   render() {
     const { data, type } = this.props
-    console.log('chart', data ? Object.values(data).map(d => d.confirmed) : data)
     let labels = ['']
     let dataPoints = []
 
@@ -22,9 +19,6 @@ export default class Chart extends Component {
       labels = Object.keys(data)
       dataPoints = Object.values(data).map(d => d.confirmed)
     }
-
-    console.log('labels', labels)
-    console.log('dataPoints', dataPoints)
 
     const chartData = {
         labels,

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Slider, Rail, Handles, Tracks, Ticks } from 'react-compound-slider'
 import { SliderRail, Handle, Track, Tick } from './TimeComponents'
 
@@ -12,7 +13,8 @@ export default class TimeController extends Component {
       dates: [],
       min: 0,
       max: 0,
-      updated: 0
+      updated: 0,
+      dayIndex: -1
     };
   }
 
@@ -21,26 +23,38 @@ export default class TimeController extends Component {
   }
 
   renderDates = () => {
-    const data = Object.keys(this.props.data)
+    const data = Object.keys(this.props.covidData)
     const dates = data.map(d => {
       let [month, day] = d.split('/')
       return `${month}/${day}`
     })
 
     this.setState({ dates }, () => {
-      this.onDateUpdate([0])  // select 1st day by default
+      this.updateDay([0])  // select 1st day by default
     })
   }
 
-  onDateUpdate = dateIndex => {
-    const date = this.state.dates[dateIndex[0]];
-    const readable = this.readableDate(date);
-    this.setState({ updated: readable }, () => {
-      const selectedDay = `${date}/20`
-      this.props.setSelectedDay(selectedDay)
-    });
+  updateDay = dayIdx => {
+    dayIdx = dayIdx[0]
+    // This function is called even if the day hasn't changed,
+    // so this if statement is necessary to avoid multiple renderings
+    if (dayIdx !== this.state.dayIndex) {
+      console.log('updateDay', dayIdx, this.state.dayIndex)
+      const date = this.state.dates[dayIdx];
+      const readable = this.readableDate(date);
+
+      this.setState({ updated: readable, dayIndex: dayIdx }, () => {
+        const selectedDay = `${date}/20`
+        this.props.setSelectedDay(selectedDay)
+      });
+    }
   };
 
+  /**
+   * Turn date into a readable format. E.g. 2/21 becomes 21 February
+   * @param  {string} date
+   * @return {string}
+   */
   readableDate = date => {
     const months = [
       'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
@@ -71,7 +85,7 @@ export default class TimeController extends Component {
               mode={1}
               step={1}
               domain={[0, dates.length-1]}
-              onUpdate={this.onDateUpdate}
+              onUpdate={this.updateDay}
               values={[0]}
             >
               <Rail>
@@ -125,4 +139,10 @@ export default class TimeController extends Component {
       </div>
     );
   }
+}
+
+TimeController.propTypes = {
+  covidData: PropTypes.object, // data for all days
+  airPollutionData: PropTypes.array, // air pollution data for all countries
+  setSelectedDay: PropTypes.func  // function to update the selected day on the parent
 }
