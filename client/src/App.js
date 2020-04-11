@@ -5,6 +5,7 @@ import GoogleMapContainer from './mapContainer/GoogleMapContainer'
 import ChartsContainer from './charts/ChartsContainer'
 import TimeController from './timeController/TimeController'
 import covid from './data/covid'
+import airPollution from './data/air_pollution_data'
 
 import './app.scss'
 
@@ -12,39 +13,35 @@ export default class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      airPollutionData: [],
+      airPollutionData: airPollution,
       covidData: covid,
       selectedDay: '',
-      covidDataForSelectedDay: []
+      covidDataForSelectedDay: [],
+      airPollutionDataForSelectedDay: [],
     }
   }
 
-  componentDidMount() {
-    this.getAirPollutionData()
-  }
-
-  getAirPollutionData = async () => {
-    const data = await csv('data/air_pollution_it.csv')
-    const airPollutionData = data.map(row => ({
-      lat: parseFloat(row.LatitudeOfMeasurementStation),
-      lng: parseFloat(row.LongitudeOfMeasurementStation),
-      // quality: parseFloat(row.AirQualityLevel)
-    }))
-    this.setState({ airPollutionData })
-  }
-
   setSelectedDay = selectedDay => {
-    this.setState({ selectedDay, covidDataForSelectedDay: this.state.covidData[selectedDay] })
+    console.log('selectedDay', selectedDay)
+    const { covidData, airPollutionData } = this.state
+    let airPollutionDataForSelectedDay = this.state.airPollutionDataForSelectedDay
+
+    // Check if air pollution data is available for the selected day
+    if (airPollutionData[selectedDay]) {
+      airPollutionDataForSelectedDay = airPollutionData[selectedDay]['Data']
+    }
+
+    this.setState({ selectedDay, covidDataForSelectedDay: covidData[selectedDay], airPollutionDataForSelectedDay })
   }
 
   render() {
-    const { airPollutionData, covidData, selectedDay, covidDataForSelectedDay } = this.state
+    const { airPollutionData, covidData, selectedDay, covidDataForSelectedDay, airPollutionDataForSelectedDay } = this.state
 
     return (
       <div className="app">
         <div className="data-area">
           <div className="map">
-            <GoogleMapContainer airPollutionData={airPollutionData} />
+            <GoogleMapContainer airPollutionData={airPollutionDataForSelectedDay} />
           </div>
           <div className="charts">
             <ChartsContainer covidData={covidDataForSelectedDay} selectedDay={selectedDay} />

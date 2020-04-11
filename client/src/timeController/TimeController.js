@@ -11,6 +11,7 @@ export default class TimeController extends Component {
 
     this.state = {
       dates: [],
+      ticks: [],
       min: 0,
       max: 0,
       updated: 0,
@@ -23,13 +24,20 @@ export default class TimeController extends Component {
   }
 
   renderDates = () => {
-    const data = Object.keys(this.props.covidData)
-    const dates = data.map(d => {
+    let { covidData, airPollutionData } = this.props
+    covidData = Object.keys(this.props.covidData)
+
+    const dates = covidData.map(d => {
       let [month, day] = d.split('/')
       return `${month}/${day}`
     })
 
-    this.setState({ dates }, () => {
+    const ticks = Object.entries(airPollutionData).filter(entry => (entry[1]['Updated'] === 'true') ? true : false)
+                                                  .map(entry => entry[0])
+    const ticksIndices = ticks.map(t => covidData.indexOf(t) >= 0 && covidData.indexOf(t))
+                              .filter(idx => idx !== false)
+
+    this.setState({ dates, ticks: ticksIndices }, () => {
       this.updateDay([0])  // select 1st day by default
     })
   }
@@ -39,7 +47,6 @@ export default class TimeController extends Component {
     // This function is called even if the day hasn't changed,
     // so this if statement is necessary to avoid multiple renderings
     if (dayIdx !== this.state.dayIndex) {
-      console.log('updateDay', dayIdx, this.state.dayIndex)
       const date = this.state.dates[dayIdx];
       const readable = this.readableDate(date);
 
@@ -69,10 +76,7 @@ export default class TimeController extends Component {
   }
 
   render() {
-    const { min, max, updated, dates } = this.state;
-    // const values = [...Array(dates.length).keys()];
-    // @TODO: Change ticks
-    const ticks = [0, 20, 50];
+    const { min, max, updated, dates, ticks } = this.state
 
     return (
       <div className="slider-container">

@@ -1,6 +1,7 @@
 /* global google */
 
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import GoogleMapReact from 'google-map-react'
 
 class GoogleMapContainer extends Component {
@@ -9,13 +10,15 @@ class GoogleMapContainer extends Component {
 
     this.state = {
       heatmapVisible: true,
-      center: {lat: 42.232294, lng: 13.607275},
-      zoom: 6
+      // center: {lat: 42.232294, lng: 13.607275},  // center of Italy
+      center: {lat: 54.5260, lng: 15.2551},  // center of Europe
+      zoom: 4
     }
   }
 
   onMapClick = ({x, y, lat, lng, event}) => {
-    console.log('this._googleMap', this._googleMap)
+    console.log('this._googleMap', x, y, lat, lng, event)
+
     if (this._googleMap !== undefined) {
       const point = new google.maps.LatLng(lat, lng)
       console.log(this._googleMap)
@@ -102,14 +105,27 @@ class GoogleMapContainer extends Component {
     }
   }
 
+  processPositions = positions => {
+    return positions.map(pos => ({
+      lat: pos.Latitude,
+      lng: pos.Longitude,
+      weight: pos.AirQualityCategory
+    }))
+  }
+
   render() {
     const { center, zoom } = this.state
+    const { airPollutionData } = this.props
+
+    console.log('GOOGLE', airPollutionData)
+    let positions = []
+    for (const values of Object.values(airPollutionData)) {
+      positions = positions.concat(values)
+    }
+    positions = this.processPositions(positions)
+
     const heatMapData = {
-      // positions: [
-      //   {lat: 55.5, lng: 34.56, weight: 0},
-      //   {lat: 34.7, lng: 28.4, weight: 6}
-      // ],
-      positions: this.props.airPollutionData,
+      positions,
       options: { radius: 15, opacity: 0.6 }
     }
 
@@ -125,6 +141,7 @@ class GoogleMapContainer extends Component {
           heatmap={heatMapData}
           onClick={this.onMapClick}
           options={this.createMapOptions}
+          onGoogleApiLoaded={this.handleApiLoaded}
           // onGoogleApiLoaded={({map, maps}) => {
           //   console.log(points);
           //   const heatmap = new maps.visualization.HeatmapLayer({
@@ -141,3 +158,7 @@ class GoogleMapContainer extends Component {
 }
 
 export default GoogleMapContainer
+
+GoogleMapContainer.propTypes = {
+  airPollutionData: PropTypes.object, // air pollution data for all weeks and countries
+}
