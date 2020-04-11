@@ -34,7 +34,8 @@ def full_dataframe_for_day(df_confirmed, df_deaths, df_recovered, day):
     d = {'Country/Region': df_confirmed['Country/Region'].values,
          'confirmed': df_confirmed[day].values,
          'deaths': df_deaths[day].values,
-         'recovered': df_recovered[day].values}
+         'recovered': df_recovered[day].values,
+         'active': df_confirmed[day].values - (df_deaths[day].values + df_recovered[day].values)}
 
     # Convert to dataframe
     df = pd.DataFrame(data=d)
