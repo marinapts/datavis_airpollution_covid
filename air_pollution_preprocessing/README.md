@@ -1,6 +1,6 @@
 # Air Pollution Data - Preprocessing
 
-# CSV Download and Column Extraction
+## CSV Download and Column Extraction
 * Separate air pollution data CSVs for each country are downloaded.
 * From the multiple columns of the csv data, only the necessary columns namely LatitudeOfMeasurementStation, LongitudeOfMeasurementStation, AirQualityLevel and datebegin are needed.
 * These columns are extracted through `extract_columns_csv.py`.
@@ -47,4 +47,4 @@ for f in *.csv; do python3 create_air_quality_category.py $f; done
 	...
 }
 ```
-* `air_pollution_data.json` is the ouput of the code with all the data for the front-end.
+* `air_pollution_data.json` is the output of the code with all the data for the front-end.
