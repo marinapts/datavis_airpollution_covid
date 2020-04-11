@@ -15,13 +15,16 @@ def load_dataframes(data_dir, country_list, country_colname='Country/Region'):
 
     # Load the csv as dataframes and extract the relevant countries
     df_confirmed = pd.read_csv(confirmed_path)
-    df_confirmed = df_confirmed.loc[df_confirmed[country_colname].isin(country_list)]
+    df_confirmed = df_confirmed.loc[df_confirmed[country_colname].isin(country_list) &
+                                    df_confirmed['Province/State'].isna()]
 
     df_deaths = pd.read_csv(deaths_path)
-    df_deaths = df_deaths.loc[df_deaths[country_colname].isin(country_list)]
+    df_deaths = df_deaths.loc[df_deaths[country_colname].isin(country_list) &
+                              df_deaths['Province/State'].isna()]
 
     df_recovered = pd.read_csv(recovered_path)
-    df_recovered = df_recovered.loc[df_recovered[country_colname].isin(country_list)]
+    df_recovered = df_recovered.loc[df_recovered[country_colname].isin(country_list) &
+                                    df_recovered['Province/State'].isna()]
 
     return df_confirmed, df_deaths, df_recovered
 
@@ -61,8 +64,37 @@ def main():
     output_filename = "john_hopkins.json"
     output_path = os.path.join(data_dir, output_filename)
 
-    # TODO: change country list to all countries in Europe, for now only testing with Italy and Spain
-    country_list = ['Italy', 'Spain']
+    # country_list = ['Italy', 'Spain']
+    country_list = ['Austria',
+                    'Belgium',
+                    'Bulgaria',
+                    'Croatia',
+                    'Cyprus',
+                    'Czechia',
+                    'Denmark',
+                    'Estonia',
+                    'France',
+                    'Germany',
+                    'Greece',
+                    'Hungary',
+                    'Iceland',
+                    'Ireland',
+                    'Italy',
+                    'Latvia',
+                    'Lithuania',
+                    'Luxembourg',
+                    'Netherlands',
+                    'Norway',
+                    'Poland',
+                    'Portugal',
+                    'Romania',
+                    'Slovakia',
+                    'Slovenia',
+                    'Spain',
+                    'Sweden',
+                    'Switzerland',
+                    'United Kingdom']
+
     df_confirmed, df_deaths, df_recovered = load_dataframes(data_dir, country_list)
 
     # Extract list of days from header
