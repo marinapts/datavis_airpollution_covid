@@ -29,13 +29,17 @@ def load_dataframes(data_dir, country_list, country_colname='Country/Region'):
     return df_confirmed, df_deaths, df_recovered
 
 
-def full_dataframe_for_day(df_confirmed, df_deaths, df_recovered, day):
+def full_dataframe_for_day(df_confirmed, df_deaths, df_recovered, day, population_data):
     # Combine data from each dataframe into one dictionary
     d = {'Country/Region': df_confirmed['Country/Region'].values,
          'confirmed': df_confirmed[day].values,
          'deaths': df_deaths[day].values,
          'recovered': df_recovered[day].values,
-         'active': df_confirmed[day].values - (df_deaths[day].values + df_recovered[day].values)}
+         'active': df_confirmed[day].values - (df_deaths[day].values + df_recovered[day].values),
+         'relative_confirmed': df_confirmed[day].values / population_data['population'].values,
+         'relative_deaths': df_deaths[day].values / population_data['population'].values,
+         'relative_recovered': df_recovered[day].values / population_data['population'].values,
+         }
 
     # Convert to dataframe
     df = pd.DataFrame(data=d)
@@ -62,7 +66,7 @@ def main():
     output_dict = defaultdict(dict)
 
     data_dir = os.path.join(os.getcwd(), 'data', 'john_hopkins')
-    output_filename = "john_hopkins.json"
+    output_filename = "john_hopkins_with_relative.json"
     output_path = os.path.join(data_dir, output_filename)
 
     # country_list = ['Italy', 'Spain']
@@ -96,6 +100,10 @@ def main():
                     'Switzerland',
                     'United Kingdom']
 
+    population_data = pd.read_csv(os.path.join('data', 'population', 'eurostat_population.csv'))
+    population_data = population_data.loc[population_data['country'].isin(country_list)]
+    population_data.sort_values(by='country', inplace=True)
+
     df_confirmed, df_deaths, df_recovered = load_dataframes(data_dir, country_list)
 
     # Extract list of days from header
@@ -103,7 +111,7 @@ def main():
 
     # Loop over all days
     for day in days:
-        day_df = full_dataframe_for_day(df_confirmed, df_deaths, df_recovered, day)
+        day_df = full_dataframe_for_day(df_confirmed, df_deaths, df_recovered, day, population_data)
         output_dict[day] = day_dataframe_to_dict(day_df)
 
     # Write dictionary to JSON
