@@ -16,9 +16,9 @@ on how to run the scripts.
 The visualisation project is built with React and can be found in the `visualisation` project.
 To run this, you should have both the air pollution and covid json files, and place them in `visualisation/src/data`:
 
-`visualisation/src/air_pollution_data.json`
+`visualisation/src/data/air_pollution_data.json`
 
-`visualisation/src/covid.json`
+`visualisation/src/data/covid.json`
 
 ## Node installation
 We use [npm](https://www.npmjs.com/) as a package manager for the JavaScript platform, so you should have

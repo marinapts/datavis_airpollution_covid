@@ -113,20 +113,19 @@ class GoogleMapContainer extends Component {
     }))
   }
 
-  render() {
-    const { center, zoom } = this.state
-    const { airPollutionData } = this.props
-
+  getHeatmapData = airPollutionData => {
     let positions = []
     for (const values of Object.values(airPollutionData)) {
       positions = positions.concat(values)
     }
     positions = this.processPositions(positions)
 
-    const heatMapData = {
-      positions,
-      options: { radius: 15, opacity: 0.6 }
-    }
+    return {positions, options: { radius: 15, opacity: 0.6 }}
+  }
+
+  render() {
+    const { center, zoom } = this.state
+    const heatMapData = this.getHeatmapData(this.props.airPollutionData)
 
     return (
       <div style={{width: '100%', height: '800px'}}>
