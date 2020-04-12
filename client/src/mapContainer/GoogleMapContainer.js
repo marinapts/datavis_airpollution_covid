@@ -17,11 +17,11 @@ class GoogleMapContainer extends Component {
   }
 
   onMapClick = ({x, y, lat, lng, event}) => {
-    console.log('this._googleMap', x, y, lat, lng, event)
+    // console.log('this._googleMap', x, y, lat, lng, event)
 
     if (this._googleMap !== undefined) {
       const point = new google.maps.LatLng(lat, lng)
-      console.log(this._googleMap)
+      // console.log(this._googleMap)
       this._googleMap.heatmap.data.push(point)
     }
   }
@@ -117,7 +117,6 @@ class GoogleMapContainer extends Component {
     const { center, zoom } = this.state
     const { airPollutionData } = this.props
 
-    console.log('GOOGLE', airPollutionData)
     let positions = []
     for (const values of Object.values(airPollutionData)) {
       positions = positions.concat(values)

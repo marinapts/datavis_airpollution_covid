@@ -22,16 +22,13 @@ export default class App extends Component {
   }
 
   setSelectedDay = selectedDay => {
-    console.log('selectedDay', selectedDay)
     const { covidData, airPollutionData } = this.state
-    let airPollutionDataForSelectedDay = this.state.airPollutionDataForSelectedDay
 
-    // Check if air pollution data is available for the selected day
-    if (airPollutionData[selectedDay]) {
-      airPollutionDataForSelectedDay = airPollutionData[selectedDay]['Data']
-    }
-
-    this.setState({ selectedDay, covidDataForSelectedDay: covidData[selectedDay], airPollutionDataForSelectedDay })
+    this.setState({
+      selectedDay,
+      covidDataForSelectedDay: covidData[selectedDay],
+      airPollutionDataForSelectedDay: airPollutionData[selectedDay]['Data']
+    })
   }
 
   render() {
@@ -44,7 +41,11 @@ export default class App extends Component {
             <GoogleMapContainer airPollutionData={airPollutionDataForSelectedDay} />
           </div>
           <div className="charts">
-            <ChartsContainer covidData={covidDataForSelectedDay} selectedDay={selectedDay} />
+            <ChartsContainer
+              covidData={covidData}
+              covidDataForSelectedDay={covidDataForSelectedDay}
+              selectedDay={selectedDay}
+            />
           </div>
         </div>
         <div className="time-controller">

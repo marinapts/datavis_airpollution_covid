@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Slider, Rail, Handles, Tracks, Ticks } from 'react-compound-slider'
+
 import { SliderRail, Handle, Track, Tick } from './TimeComponents'
+import { readableDate } from '../util'
 
 import './time-controller.scss'
 
 export default class TimeController extends Component {
   constructor() {
-    super();
+    super()
 
     this.state = {
       dates: [],
@@ -16,7 +18,7 @@ export default class TimeController extends Component {
       max: 0,
       updated: 0,
       dayIndex: -1
-    };
+    }
   }
 
   componentDidMount() {
@@ -47,32 +49,19 @@ export default class TimeController extends Component {
     // This function is called even if the day hasn't changed,
     // so this if statement is necessary to avoid multiple renderings
     if (dayIdx !== this.state.dayIndex) {
-      const date = this.state.dates[dayIdx];
-      const readable = this.readableDate(date);
+      const date = this.state.dates[dayIdx]
+      const readable = readableDate(date)
 
       this.setState({ updated: readable, dayIndex: dayIdx }, () => {
         const selectedDay = `${date}/20`
         this.props.setSelectedDay(selectedDay)
-      });
+      })
     }
-  };
-
-  /**
-   * Turn date into a readable format. E.g. 2/21 becomes 21 February
-   * @param  {string} date
-   * @return {string}
-   */
-  readableDate = date => {
-    const months = [
-      'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
-    ];
-    const [month, day] = date.split("/");
-    return `${day} ${months[parseInt(month) - 1]}`;
-  };
+  }
 
   formatTickLabel = tick => {
-    const date = this.state.dates[tick];
-    return this.readableDate(date);
+    const date = this.state.dates[tick]
+    return readableDate(date)
   }
 
   render() {
@@ -141,7 +130,7 @@ export default class TimeController extends Component {
           </div>
         }
       </div>
-    );
+    )
   }
 }
 

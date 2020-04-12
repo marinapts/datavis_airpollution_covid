@@ -6,11 +6,12 @@
   background-color: $background;
 }
 
-.card {
+.card, .MuiPaper-root, .MuiCard-root {
   /*background-color: #1a2335;*/
   /*background-color: #101d2f;*/
-  background-color: $cardBackground;
+  background-color: $cardBackground !important;
   margin: 20px 0;
+  padding: 10px 10px;
 }
 
 .card-content {

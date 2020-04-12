@@ -2,25 +2,54 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import Chart from './Chart'
+import { readableDate } from '../util'
+
 
 export default class ChartsContainer extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      covidDataForDay: {},  // object containing data for each country
+      selectedDayFound: false
     }
   }
 
-  // setDataForSelectedDay = (update=false) => {
-  //   const { covidData, selectedDay } = this.props
-  //   const covidDataForDay = covidData[selectedDay]
-  //   this.setState({ covidDataForDay, dayUpdated: update })
-  // }
+  sumCasesOverCountries = (data, column) => {
+    let allCases = []
+    for (let country in data) {
+      allCases.push(data[country][column])
+    }
+    return allCases.reduce((a, b) => a+b, 0)
+  }
+
+  formatDates = (dates) => {
+    return dates.map(date => {
+      const [month, day, year] = date.split('/')
+      const dayMonth = `${month}/${day}`
+      return readableDate(dayMonth)
+    })
+  }
 
   render() {
+    const { covidData, covidDataForSelectedDay, selectedDay } = this.props
+    const formattedDays = this.formatDates(Object.keys(covidData))
+    let cumulativeData = []
+
+    for (let day in covidData) {
+      if (day !== selectedDay) {
+        const sumOverCountries = this.sumCasesOverCountries(covidData[day], 'confirmed')
+        cumulativeData.push({day, sum: sumOverCountries})
+      } else {
+        break
+      }
+    }
+
+
     return (
       <div className="chart-container">
-        <Chart data={this.props.covidData} type="line" />
+        <Chart data={covidDataForSelectedDay} type="horizontalBar" title="Confirmed Cases" />
+        <Chart data={covidDataForSelectedDay} type="cumulative" title="Cumulative Confirmed Cases"
+               xLabels={formattedDays} values={cumulativeData}
+        />
       </div>
     )
   }
