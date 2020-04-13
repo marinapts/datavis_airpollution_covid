@@ -38,7 +38,7 @@ export default class App extends Component {
     // console.log('airPollutionDataForSelectedDay', airPollutionDataForSelectedDay.filter(i => i.Longitude < -50))
     if (airPollutionDataForSelectedDay) {
       // airPollutionDataForSelectedDay = airPollutionDataForSelectedDay.filter(row => row.Country === 'iceland')
-      console.log('airPollutionDataForSelectedDay', airPollutionDataForSelectedDay.filter(row => row.Country === 'iceland'))
+      console.log('airPollutionDataForSelectedDay', airPollutionDataForSelectedDay.filter(row => row.Country === 'iceland').map(row => row.AirQualityLevel))
     }
 
     return (

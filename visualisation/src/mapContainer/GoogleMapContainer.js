@@ -106,15 +106,24 @@ class GoogleMapContainer extends Component {
   }
 
   processPositions = positions => {
-    const airPollutionLevels = positions.map(el => el.AirQualityLevel)
-    console.log('data', positions.map(pos => {
+    // const airPollutionLevels = positions.map(el => {el.AirQualityLevel)
+    const airPollutionLevels = positions.map(pos => {
       if (pos.Country === 'iceland') {
-        pos.AirQualityLevel = 200
+        pos.AirQualityLevel = 1000
       }
-    }))
-    console.log('levels', airPollutionLevels)
-    const maxLevel = Math.max(...airPollutionLevels)
-    console.log('max', maxLevel)
+      return pos.AirQualityLevel
+    })
+
+    const iceland = positions.filter(pos => pos.Country === 'iceland').map(pos => pos.AirQualityLevel)
+    console.log('iceland', iceland)
+    // console.log('data', positions.map(pos => {
+    //   if (pos.Country === 'iceland') {
+    //     pos.AirQualityLevel = 200
+    //   }
+    // }))
+    // console.log('levels', airPollutionLevels)
+    // const maxLevel = Math.max(...airPollutionLevels)
+    // console.log('max', maxLevel)
     const maxLevelOverall = 125
 
     return positions.map(pos => ({
@@ -122,7 +131,8 @@ class GoogleMapContainer extends Component {
       lng: pos.Longitude,
       // weight: airQualityMapping[pos.AirQualityCategory]
       // weight: pos.AirQualityLevel/(maxLevel * airPollutionLevels.length)
-      weight: pos.AirQualityLevel/maxLevelOverall
+      // weight: pos.AirQualityLevel
+      weight: pos.AirQualityLevel
     }))
   }
 
