@@ -1,3 +1,6 @@
+.DS_Store
 data/
+.env/
+.idea/
 node_modules/
 package-lock.json
