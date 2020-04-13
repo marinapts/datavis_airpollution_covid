@@ -55,6 +55,10 @@ export default class App extends Component {
             />
           </div>
         </div>
+		<h5 style={{ color: 'white' }}>Low NO2 Level (0ug/m3)</h5>
+		  <div style={{marginTop:'-33px',marginLeft:'153px', height: '10px', width: '20%', background: 'linear-gradient(to left,rgba(255, 0, 0, 1),rgba(191, 0, 31, 1),rgba(127, 0, 63, 1),rgba(63, 0, 91, 1),rgba(0, 0, 127, 1),rgba(0, 0, 159, 1),rgba(0, 0, 191, 1),rgba(0, 0, 223, 1),rgba(0, 0, 255, 1),rgba(0, 63, 255, 1),rgba(0, 127, 255, 1),rgba(0, 191, 255, 1),rgba(0, 255, 255, 1),rgba(0, 255, 255, 0))'}}>
+		  </div>
+		<h5 style={{  marginTop:'-15px', marginLeft:'460px',color: 'white',}}>High NO2 Level (125ug/m3)</h5>
         <div className="time-controller">
           <TimeController
             covidData={covidData}
