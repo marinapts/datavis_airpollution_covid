@@ -35,6 +35,7 @@ export default class App extends Component {
 
     return (
       <div className="app">
+        <div>NO<sub>2</sub> Levels during the Covid-19 Pandemic in Europe</div>
         <div className="data-area">
           <div className="map">
             <GoogleMapContainer airPollutionData={airPollutionDataForSelectedDay} />
@@ -44,6 +45,7 @@ export default class App extends Component {
               covidData={covidData}
               covidDataForSelectedDay={covidDataForSelectedDay}
               selectedDay={selectedDay}
+              airPollutionData={airPollutionData}
             />
           </div>
         </div>

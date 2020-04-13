@@ -11,13 +11,13 @@ import './chart.scss'
 
 export default class Chart extends Component {
   render() {
-    const { data, type, title, xLabels, values } = this.props
+    const { data, type, title, xLabels } = this.props
 
     return (
       <Card className="card">
         <div className="card-title">{title}</div>
         {type === 'horizontalBar' && <BarChart data={data} />}
-        {type === 'cumulative' && <LineChart data={values} xLabels={xLabels} />}
+        {type === 'cumulative' && <LineChart data={data} xLabels={xLabels} />}
       </Card>
     )
   }
@@ -28,7 +28,6 @@ Chart.propTypes = {
   type: PropTypes.string,  // chart type horizontalBar|cumulative
   title: PropTypes.string,  // title of the chart
   xLabels: PropTypes.array,  // custom labels for the x axis
-  values: PropTypes.array,  // values for the cumulative chart
 }
 
 
@@ -49,8 +48,8 @@ class BarChart extends Component {
 
     if (data) {
       const sortedCountries = this.sortCountries(data, 'confirmed')
-      labels = sortedCountries.map(entry => entry[0])
-      dataPoints = sortedCountries.map(entry => entry[1])
+      labels = sortedCountries.map(el => el[0])
+      dataPoints = sortedCountries.map(el => el[1])
     }
 
     /**
@@ -61,17 +60,19 @@ class BarChart extends Component {
         datasets: [{
           backgroundColor: '#35d8d0',
           borderColor: '#35d8d0',
-          fontColor: 'red',
           data: dataPoints,
-          labels: {fontColor: 'rgb(25, 99, 132)'}
         }]
     }
 
     const options = {
       maintainAspectRatio: false,
       scales: {
-        yAxes: [{ticks: {beginAtZero: true}}],
-        xAxes: [{ticks: {beginAtZero: true}}],
+        yAxes: [{
+          ticks: {fontColor: "lightgrey", stepSize: 1, beginAtZero: true}
+        }],
+        xAxes: [{
+          ticks: {fontColor: "lightgrey", stepSize: 100, beginAtZero: true}
+        }]
       },
       legend: {display: false}
     }
@@ -97,7 +98,6 @@ class LineChart extends Component {
       labels: xLabels,
       datasets: [
         {
-          label: 'My First dataset',
           fill: false,
           lineTension: 0.1,
           backgroundColor: '#35d8d0',
@@ -107,22 +107,30 @@ class LineChart extends Component {
           borderDashOffset: 0.0,
           borderJoinStyle: 'miter',
           pointBorderColor: '#35d8d0',
-          pointBackgroundColor: '#fff',
+          pointBackgroundColor: '#35d8d0',
           pointBorderWidth: 1,
           pointHoverRadius: 5,
           pointHoverBackgroundColor: '#35d8d0',
-          pointHoverBorderColor: 'rgba(220,220,220,1)',
+          pointHoverBorderColor: '#35d8d0',
           pointHoverBorderWidth: 2,
           pointRadius: 1,
           pointHitRadius: 10,
-          data: data.map(v => v.sum)
-        }
+          data: data.map(v => v.avg.toFixed(2))
+        },
       ]
     };
 
+    const options = {
+      legend: {display: false},
+      scales: {
+        yAxes: [{ticks: {fontColor: "lightgrey", fontSize: 13, stepSize: 1, beginAtZero: true}}],
+        xAxes: [{ticks: {fontColor: "lightgrey", fontSize: 13}}]
+      }
+    }
+
 
     return(
-      <Line data={lineData} />
+      <Line data={lineData} options={options} />
     )
   }
 }
