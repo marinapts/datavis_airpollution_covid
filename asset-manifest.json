@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/datavis-project/static/css/main.f7e079c2.chunk.css",
+    "main.js": "/datavis-project/static/js/main.f2ddec94.chunk.js",
+    "main.js.map": "/datavis-project/static/js/main.f2ddec94.chunk.js.map",
+    "runtime-main.js": "/datavis-project/static/js/runtime-main.cdcd0ead.js",
+    "runtime-main.js.map": "/datavis-project/static/js/runtime-main.cdcd0ead.js.map",
+    "static/js/2.f009c549.chunk.js": "/datavis-project/static/js/2.f009c549.chunk.js",
+    "static/js/2.f009c549.chunk.js.map": "/datavis-project/static/js/2.f009c549.chunk.js.map",
+    "index.html": "/datavis-project/index.html",
+    "precache-manifest.cf031e2ec227ac27b44ad1fe21e0c375.js": "/datavis-project/precache-manifest.cf031e2ec227ac27b44ad1fe21e0c375.js",
+    "service-worker.js": "/datavis-project/service-worker.js",
+    "static/css/main.f7e079c2.chunk.css.map": "/datavis-project/static/css/main.f7e079c2.chunk.css.map",
+    "static/js/2.f009c549.chunk.js.LICENSE.txt": "/datavis-project/static/js/2.f009c549.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.cdcd0ead.js",
+    "static/js/2.f009c549.chunk.js",
+    "static/css/main.f7e079c2.chunk.css",
+    "static/js/main.f2ddec94.chunk.js"
+  ]
+}

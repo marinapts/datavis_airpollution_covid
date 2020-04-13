@@ -1,1 +1,0 @@
-for f in *.csv; do python3 create_air_quality_category.py $f; done
