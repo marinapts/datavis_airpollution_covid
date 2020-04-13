@@ -1,0 +1,32 @@
+@import '../variables.scss';
+
+#legend {
+  display: flex;
+  flex-direction: row;
+  margin: -22px;
+  overflow: overlay !important;
+  position: absolute;
+  top: 83%;
+  left: 7%;
+  z-index: 5;
+  background-color: transparent;
+  padding: 5px;
+  text-align: center;
+  font-family: 'Roboto','sans-serif';
+  line-height: 30px;
+  padding-left: 10px;
+  color: white;
+  width: 30%;
+  height: 35px;
+}
+
+.map-legend-colours {
+  flex: 1 1 auto;
+  height: 10px;
+  width: 20%;
+  text-shadow: 2px 2px $background;
+}
+
+.legend-text {
+  margin: -10px 5px 0 5px;
+}
