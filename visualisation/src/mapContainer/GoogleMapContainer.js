@@ -106,26 +106,28 @@ class GoogleMapContainer extends Component {
   }
 
   processPositions = positions => {
-    const airQualityMapping = {
-      1: 1,
-      2: 100,
-      3: 200,
-      4: 300
-    }
+    const airPollutionLevels = positions.map(el => el.AirQualityLevel)
+    console.log('levels', airPollutionLevels)
+    const maxLevel = Math.max(...airPollutionLevels)
+    console.log('max', maxLevel)
+
     return positions.map(pos => ({
       lat: pos.Latitude,
       lng: pos.Longitude,
       // weight: airQualityMapping[pos.AirQualityCategory]
-      weight: pos.AirQualityLevel
+      // weight: pos.AirQualityLevel/(maxLevel * airPollutionLevels.length)
+      weight: pos.AirQualityCategory
     }))
   }
 
   getHeatmapData = airPollutionData => {
     let positions = []
-    for (const values of Object.values(airPollutionData)) {
-      positions = positions.concat(values)
+    if (airPollutionData) {
+      for (const values of Object.values(airPollutionData)) {
+        positions = positions.concat(values)
+      }
+      positions = this.processPositions(positions)
     }
-    positions = this.processPositions(positions)
 
     return {
       positions,
