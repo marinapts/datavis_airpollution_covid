@@ -24,6 +24,6 @@ yarn-error.log*
 
 data/
 .env
-.env/
-.idea/
+preprocessing/.env/
+.idea/*
 package-lock.json
