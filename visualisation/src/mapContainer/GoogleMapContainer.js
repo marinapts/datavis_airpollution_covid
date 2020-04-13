@@ -115,13 +115,14 @@ class GoogleMapContainer extends Component {
     console.log('levels', airPollutionLevels)
     const maxLevel = Math.max(...airPollutionLevels)
     console.log('max', maxLevel)
+    const maxLevelOverall = 125
 
     return positions.map(pos => ({
       lat: pos.Latitude,
       lng: pos.Longitude,
       // weight: airQualityMapping[pos.AirQualityCategory]
       // weight: pos.AirQualityLevel/(maxLevel * airPollutionLevels.length)
-      weight: pos.AirQualityLevel
+      weight: pos.AirQualityLevel/maxLevelOverall
     }))
   }
 
