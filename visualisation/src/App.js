@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { csv } from 'd3'
 
 import GoogleMapContainer from './mapContainer/GoogleMapContainer'
 import ChartsContainer from './charts/ChartsContainer'
@@ -33,6 +32,9 @@ export default class App extends Component {
 
   render() {
     const { airPollutionData, covidData, selectedDay, covidDataForSelectedDay, airPollutionDataForSelectedDay } = this.state
+    // console.log('all', airPollutionDataForSelectedDay)
+    // console.log('airPollutionDataForSelectedDay', airPollutionDataForSelectedDay.filter(i => i.Longitude < -50))
+    console.log('airPollutionDataForSelectedDay', airPollutionDataForSelectedDay)
 
     return (
       <div className="app">

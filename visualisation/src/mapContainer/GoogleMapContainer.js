@@ -106,10 +106,17 @@ class GoogleMapContainer extends Component {
   }
 
   processPositions = positions => {
+    const airQualityMapping = {
+      1: 1,
+      2: 100,
+      3: 200,
+      4: 300
+    }
     return positions.map(pos => ({
       lat: pos.Latitude,
       lng: pos.Longitude,
-      weight: pos.AirQualityCategory
+      // weight: airQualityMapping[pos.AirQualityCategory]
+      weight: pos.AirQualityLevel
     }))
   }
 
@@ -146,9 +153,9 @@ class GoogleMapContainer extends Component {
   render() {
     const { center, zoom } = this.state
     const heatMapData = this.getHeatmapData(this.props.airPollutionData)
-    console.log('process', process.env)
+
     return (
-      <div style={{width: '100%', height: '800px'}}>
+      <div style={{width: '100%', height: '820px'}}>
         <GoogleMapReact
           ref={(el) => this._googleMap = el}
           bootstrapURLKeys={{ key: process.env.REACT_APP_API_KEY, libraries: 'visualization'}}

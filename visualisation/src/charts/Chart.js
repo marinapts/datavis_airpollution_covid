@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Card, CardContent, Typography } from '@material-ui/core'
 import { Bar, defaults, HorizontalBar, Line } from 'react-chartjs-2'
-import ChartDataLabels from 'chartjs-plugin-datalabels'
+// import ChartDataLabels from 'chartjs-plugin-datalabels'
 
 import './chart.scss'
 
@@ -17,7 +17,7 @@ export default class Chart extends Component {
       <Card className="card">
         <div className="card-title">{title}</div>
         {type === 'horizontalBar' && <BarChart data={data} />}
-        {type === 'cumulative' && <LineChart data={data} xLabels={xLabels} values={values} />}
+        {type === 'cumulative' && <LineChart data={values} xLabels={xLabels} />}
       </Card>
     )
   }
@@ -59,7 +59,7 @@ class BarChart extends Component {
     const chartData = {
         labels,
         datasets: [{
-          label: "My First dataset",
+          // label: "My First dataset",
           backgroundColor: '#35d8d0',
           borderColor: '#35d8d0',
           fontColor: 'red',
@@ -81,9 +81,9 @@ class BarChart extends Component {
       <HorizontalBar
         data={chartData}
         options={options}
-        plugins={[ChartDataLabels]}
+        // plugins={[ChartDataLabels]}
         width={100}
-        height={350}
+        height={400}
       />
     )
   }
@@ -92,7 +92,7 @@ class BarChart extends Component {
 
 class LineChart extends Component {
   render() {
-    const { data, xLabels, values } = this.props
+    const { data, xLabels } = this.props
 
     const lineData = {
       labels: xLabels,
@@ -116,7 +116,7 @@ class LineChart extends Component {
           pointHoverBorderWidth: 2,
           pointRadius: 1,
           pointHitRadius: 10,
-          data: values.map(v => v.sum)
+          data: data.map(v => v.sum)
         }
       ]
     };

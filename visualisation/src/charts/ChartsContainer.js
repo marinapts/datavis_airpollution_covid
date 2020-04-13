@@ -46,8 +46,8 @@ export default class ChartsContainer extends Component {
 
     return (
       <div className="chart-container">
-        <Chart data={covidDataForSelectedDay} type="horizontalBar" title="Confirmed Cases" />
-        <Chart data={covidDataForSelectedDay} type="cumulative" title="Cumulative Confirmed Cases"
+        <Chart data={covidDataForSelectedDay} type="horizontalBar" title="Confirmed Cases per European Country" />
+        <Chart data={covidDataForSelectedDay} type="cumulative" title="Cumulative Cases in Europe"
                xLabels={formattedDays} values={cumulativeData}
         />
       </div>
