@@ -7,9 +7,12 @@ and run the following command to download the COVID-19 data:
 bash preprocessing/download_files.sh
 ```
 
-To activate the virtual environment, run:
+To create, activate and update the virtual environment with the relevant packages,
+run the following three commands:
 ```
+python3 -m venv .env
 source .env/bin/activate
+pip install -r requirements.txt
 ```
 
 To pre-process the COVID-19 data, run:
