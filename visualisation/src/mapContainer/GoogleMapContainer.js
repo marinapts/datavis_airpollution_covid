@@ -107,13 +107,7 @@ class GoogleMapContainer extends Component {
 
   processPositions = positions => {
     // const airPollutionLevels = positions.map(el => {el.AirQualityLevel)
-    const airPollutionLevels = positions.map(pos => {
-      if (pos.Country === 'iceland') {
-        pos.AirQualityLevel = 1000
-      }
-      return pos.AirQualityLevel
-    })
-
+    const maxLevelOverall = 125
     const iceland = positions.filter(pos => pos.Country === 'iceland').map(pos => pos.AirQualityLevel)
     console.log('iceland', iceland)
     // console.log('data', positions.map(pos => {
@@ -124,16 +118,19 @@ class GoogleMapContainer extends Component {
     // console.log('levels', airPollutionLevels)
     // const maxLevel = Math.max(...airPollutionLevels)
     // console.log('max', maxLevel)
-    const maxLevelOverall = 125
-
-    return positions.map(pos => ({
-      lat: pos.Latitude,
-      lng: pos.Longitude,
-      // weight: airQualityMapping[pos.AirQualityCategory]
-      // weight: pos.AirQualityLevel/(maxLevel * airPollutionLevels.length)
-      // weight: pos.AirQualityLevel
-      weight: pos.AirQualityLevel
-    }))
+    console.log('num points', positions.length)
+    return positions.map(pos => {
+      // console.log('air quality', pos.AirQualityLevel)
+      // console.log('air quality normalised', pos.AirQualityLevel/maxLevelOverall)
+      return {
+        lat: pos.Latitude,
+        lng: pos.Longitude,
+        // weight: airQualityMapping[pos.AirQualityCategory]
+        // weight: pos.AirQualityLevel/(maxLevel * airPollutionLevels.length)
+        // weight: pos.AirQualityLevel
+        weight: pos.AirQualityLevel/(positions.length)
+      }
+    })
   }
 
   getHeatmapData = airPollutionData => {
