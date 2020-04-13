@@ -2,3 +2,5 @@
 data/
 .env/
 .idea/
+node_modules/
+package-lock.json
