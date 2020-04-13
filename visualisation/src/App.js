@@ -4,7 +4,8 @@ import GoogleMapContainer from './mapContainer/GoogleMapContainer'
 import ChartsContainer from './charts/ChartsContainer'
 import TimeController from './timeController/TimeController'
 import covid from './data/covid'
-import airPollution from './data/air_pollution_data'
+// import airPollution from './data/air_pollution_data'
+import airPollution from './data/air_pollution_new'
 
 import './app.scss'
 
@@ -26,15 +27,19 @@ export default class App extends Component {
     this.setState({
       selectedDay,
       covidDataForSelectedDay: covidData[selectedDay],
-      airPollutionDataForSelectedDay: airPollutionData[selectedDay]['Data']
+      // airPollutionDataForSelectedDay: airPollutionData[selectedDay].filter(row => row.Country === 'italy')
+      airPollutionDataForSelectedDay: airPollutionData[selectedDay]
     })
   }
 
   render() {
-    const { airPollutionData, covidData, selectedDay, covidDataForSelectedDay, airPollutionDataForSelectedDay } = this.state
+    let { airPollutionData, covidData, selectedDay, covidDataForSelectedDay, airPollutionDataForSelectedDay } = this.state
     // console.log('all', airPollutionDataForSelectedDay)
     // console.log('airPollutionDataForSelectedDay', airPollutionDataForSelectedDay.filter(i => i.Longitude < -50))
-    console.log('airPollutionDataForSelectedDay', airPollutionDataForSelectedDay)
+    if (airPollutionDataForSelectedDay) {
+      // airPollutionDataForSelectedDay = airPollutionDataForSelectedDay.filter(row => row.Country === 'iceland')
+      console.log('airPollutionDataForSelectedDay', airPollutionDataForSelectedDay.filter(row => row.Country === 'iceland').map(row => row.AirQualityLevel))
+    }
 
     return (
       <div className="app">

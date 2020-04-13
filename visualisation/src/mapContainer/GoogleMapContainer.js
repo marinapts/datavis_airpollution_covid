@@ -22,7 +22,7 @@ class GoogleMapContainer extends Component {
     if (this._googleMap !== undefined) {
       const point = new google.maps.LatLng(lat, lng)
       // console.log(this._googleMap)
-      this._googleMap.heatmap.data.push(point)
+      // this._googleMap.heatmap.data.push(point)
     }
   }
 
@@ -106,26 +106,41 @@ class GoogleMapContainer extends Component {
   }
 
   processPositions = positions => {
-    const airQualityMapping = {
-      1: 1,
-      2: 100,
-      3: 200,
-      4: 300
-    }
-    return positions.map(pos => ({
-      lat: pos.Latitude,
-      lng: pos.Longitude,
-      // weight: airQualityMapping[pos.AirQualityCategory]
-      weight: pos.AirQualityLevel
-    }))
+    // const airPollutionLevels = positions.map(el => {el.AirQualityLevel)
+    const maxLevelOverall = 125
+    const iceland = positions.filter(pos => pos.Country === 'iceland').map(pos => pos.AirQualityLevel)
+    console.log('iceland', iceland)
+    // console.log('data', positions.map(pos => {
+    //   if (pos.Country === 'iceland') {
+    //     pos.AirQualityLevel = 200
+    //   }
+    // }))
+    // console.log('levels', airPollutionLevels)
+    // const maxLevel = Math.max(...airPollutionLevels)
+    // console.log('max', maxLevel)
+    console.log('num points', positions.length)
+    return positions.map(pos => {
+      // console.log('air quality', pos.AirQualityLevel)
+      // console.log('air quality normalised', pos.AirQualityLevel/maxLevelOverall)
+      return {
+        lat: pos.Latitude,
+        lng: pos.Longitude,
+        // weight: airQualityMapping[pos.AirQualityCategory]
+        // weight: pos.AirQualityLevel/(maxLevel * airPollutionLevels.length)
+        // weight: pos.AirQualityLevel
+        weight: pos.AirQualityLevel/(positions.length)
+      }
+    })
   }
 
   getHeatmapData = airPollutionData => {
     let positions = []
-    for (const values of Object.values(airPollutionData)) {
-      positions = positions.concat(values)
+    if (airPollutionData) {
+      for (const values of Object.values(airPollutionData)) {
+        positions = positions.concat(values)
+      }
+      positions = this.processPositions(positions)
     }
-    positions = this.processPositions(positions)
 
     return {
       positions,
