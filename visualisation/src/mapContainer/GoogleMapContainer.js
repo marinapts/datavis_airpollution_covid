@@ -22,7 +22,7 @@ class GoogleMapContainer extends Component {
     if (this._googleMap !== undefined) {
       const point = new google.maps.LatLng(lat, lng)
       // console.log(this._googleMap)
-      this._googleMap.heatmap.data.push(point)
+      // this._googleMap.heatmap.data.push(point)
     }
   }
 
@@ -107,6 +107,11 @@ class GoogleMapContainer extends Component {
 
   processPositions = positions => {
     const airPollutionLevels = positions.map(el => el.AirQualityLevel)
+    console.log('data', positions.map(pos => {
+      if (pos.Country === 'iceland') {
+        pos.AirQualityLevel = 200
+      }
+    }))
     console.log('levels', airPollutionLevels)
     const maxLevel = Math.max(...airPollutionLevels)
     console.log('max', maxLevel)
@@ -116,7 +121,7 @@ class GoogleMapContainer extends Component {
       lng: pos.Longitude,
       // weight: airQualityMapping[pos.AirQualityCategory]
       // weight: pos.AirQualityLevel/(maxLevel * airPollutionLevels.length)
-      weight: pos.AirQualityCategory
+      weight: pos.AirQualityLevel
     }))
   }
 
