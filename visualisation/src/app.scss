@@ -1,0 +1,19 @@
+@import 'variables.scss';
+
+.app {
+  height: 100%;
+  width: 100%;
+}
+
+.data-area {
+  display: flex;
+  flex-direction: row;
+}
+
+.map {
+  flex: 70%;
+}
+
+.charts {
+  flex: 30%;
+}
