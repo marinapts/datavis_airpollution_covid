@@ -1,3 +1,27 @@
+## Data Visualisation webapp
+
+The visualisation project is built with React and can be found in the `src` project.
+To run this, you should have both the air pollution and covid json files, and place them in `visualisation/src/data`:
+
+`visualisation/src/data/air_pollution_data.json`
+
+`visualisation/src/data/covid.json`
+
+## Node installation
+We use [npm](https://www.npmjs.com/) as a package manager for the JavaScript platform, so you should have
+the latest [Node](https://nodejs.org/en/download/) version installed on your machine before running the application.
+
+
+## Run the application
+
+```bash
+cd visualisation
+npm install
+npm run start
+```
+The application should start running in localhost:3000 -->
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
