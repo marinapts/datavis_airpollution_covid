@@ -153,7 +153,7 @@ class GoogleMapContainer extends Component {
     const gradient = heatMapData.options.gradient.join(',')
 
     return (
-      <div style={{width: '100%', height: '810px'}}>
+      <div style={{position: 'relative', width: '100%', height: '100%'}}>
         <GoogleMapReact
           ref={(el) => this._googleMap = el}
           bootstrapURLKeys={{ key: process.env.REACT_APP_API_KEY, libraries: 'visualization'}}
