@@ -169,7 +169,7 @@ export function Tick({ tick, count, format }) {
           marginLeft: `${-(100 / count) / 2}%`,
           width: `${100 / count}%`,
           left: `${tick.percent}%`,
-          color: 'white',
+          color: 'lightgrey',
           fontSize: 12
         }}
       >
