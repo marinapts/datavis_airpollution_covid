@@ -176,9 +176,9 @@ class GoogleMapContainer extends Component {
           // }}
         />
         <div id="legend">
-          <div className="legend-text">Low NO<sub>2</sub> Level (0 ug/m3)</div>
+          <div className="legend-text">Low NO<sub>2</sub> Level (0 ug/m<sup>3</sup>)</div>
           <div className="map-legend-colours" style={{background: 'linear-gradient(to right,' + gradient}}></div>
-          <div className="legend-text">High NO<sub>2</sub> Level (125 ug/m3)</div>
+          <div className="legend-text">High NO<sub>2</sub> Level (125 ug/m<sup>3</sup>)</div>
         </div>
         <div id="title">
           <h2>NO<sub>2</sub> Levels during the Covid-19 Pandemic in Europe</h2>

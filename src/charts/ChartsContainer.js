@@ -60,7 +60,7 @@ export default class ChartsContainer extends Component {
 
     return (
       <div className="chart-container">
-        <Chart data={covidDataForSelectedDay} type="horizontalBar" title="Confirmed Cases per European Country" />
+        <Chart data={covidDataForSelectedDay} type="horizontalBar" title="Confirmed Covid-19 Cases per Country" />
         <Chart data={airPollutionAvg} type="cumulative" title="Average N02 Level" xLabels={formattedDays} />
       </div>
     )
