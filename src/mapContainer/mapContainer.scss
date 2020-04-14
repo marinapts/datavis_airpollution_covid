@@ -30,3 +30,24 @@
 .legend-text {
   margin: -10px 5px 0 5px;
 }
+
+#title {
+  display: flex;
+  flex-direction: row;
+  margin: -22px;
+  overflow: overlay !important;
+  position: absolute;
+  top: 2%;
+  left: 20%;
+  z-index: 5;
+  background-color: transparent;
+  padding: 5px;
+  text-align: center;
+  font-family: 'Roboto','sans-serif';
+  line-height: 30px;
+  padding-left: 10px;
+  color: white;
+  width: 30%;
+  height: 55px;
+  text-shadow: 4px 3px $background;
+}
