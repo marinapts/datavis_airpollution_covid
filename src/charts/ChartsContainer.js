@@ -15,8 +15,8 @@ export default class ChartsContainer extends Component {
 
   sumCasesOverCountries = (data, column) => {
     let allCases = []
-    for (let country in data) {
-      allCases.push(data[country][column])
+    for (let point in data) {
+      allCases.push(point[column])
     }
     return allCases.reduce((a, b) => a+b, 0)
   }
@@ -30,14 +30,28 @@ export default class ChartsContainer extends Component {
   }
 
   render() {
-    const { covidData, covidDataForSelectedDay, selectedDay } = this.props
+    const { covidData, covidDataForSelectedDay, selectedDay, airPollutionData } = this.props
     const formattedDays = this.formatDates(Object.keys(covidData))
-    let cumulativeData = []
+    // let cumulativeData = []
+    let airPollutionAvg = []
+
+    // for (let day in covidData) {
+    //   if (day !== selectedDay) {
+    //     const sumOverCountries = this.sumCasesOverCountries(covidData[day], 'confirmed')
+    //     cumulativeData.push({day, sum: sumOverCountries})
+    //   } else {
+    //     break
+    //   }
+    // }
 
     for (let day in covidData) {
       if (day !== selectedDay) {
-        const sumOverCountries = this.sumCasesOverCountries(covidData[day], 'confirmed')
-        cumulativeData.push({day, sum: sumOverCountries})
+        const dailyAirPollution = airPollutionData[day]
+        if (dailyAirPollution) {
+          const allQualityLevels = dailyAirPollution.map(p => p.AirQualityLevel)
+          const sum = allQualityLevels.reduce((a, b) => a+b, 0)
+          airPollutionAvg.push({day, avg: sum/(dailyAirPollution.length)})
+        }
       } else {
         break
       }
@@ -47,9 +61,7 @@ export default class ChartsContainer extends Component {
     return (
       <div className="chart-container">
         <Chart data={covidDataForSelectedDay} type="horizontalBar" title="Confirmed Cases per European Country" />
-        <Chart data={covidDataForSelectedDay} type="cumulative" title="Cumulative Cases in Europe"
-               xLabels={formattedDays} values={cumulativeData}
-        />
+        <Chart data={airPollutionAvg} type="cumulative" title="Average N02 Level" xLabels={formattedDays} />
       </div>
     )
   }
@@ -57,5 +69,7 @@ export default class ChartsContainer extends Component {
 
 ChartsContainer.propTypes = {
   covidData: PropTypes.object, // data for all days
-  selectedDay: PropTypes.string  // selected day to use for filtering out
+  selectedDay: PropTypes.string,  // selected day to use for filtering out
+  covidDataForSelectedDay: PropTypes.object,
+  airPollutionData: PropTypes.object
 }

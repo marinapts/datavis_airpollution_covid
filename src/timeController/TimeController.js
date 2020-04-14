@@ -26,20 +26,24 @@ export default class TimeController extends Component {
   }
 
   renderDates = () => {
-    let { covidData, airPollutionData } = this.props
-    covidData = Object.keys(this.props.covidData)
+    let { covidData } = this.props
+    let dates = []
 
-    const dates = covidData.map(d => {
-      let [month, day] = d.split('/')
-      return `${month}/${day}`
-    })
+    // Exclude dates that have no confirmed cases for every country
+    for (let date in covidData) {
+      const cases = Object.values(covidData[date])
+      const noConfirmedCases = cases.every(el => el.confirmed === 0)
 
-    const ticks = Object.entries(airPollutionData).filter(entry => (entry[1]['Updated'] === 'true') ? true : false)
-                                                  .map(entry => entry[0])
-    const ticksIndices = ticks.map(t => covidData.indexOf(t) >= 0 && covidData.indexOf(t))
-                              .filter(idx => idx !== false)
+      if (!noConfirmedCases) {
+        let [month, day] = date.split('/')
+        dates.push(`${month}/${day}`)
+      }
+    }
 
-    this.setState({ dates, ticks: ticksIndices }, () => {
+    let dateIndices = [...Array(parseInt((dates.length)/7)).keys()]
+    const updatedDateIndices = dateIndices.map(idx => idx * 7)
+
+    this.setState({ dates, ticks: updatedDateIndices }, () => {
       this.updateDay([0])  // select 1st day by default
     })
   }

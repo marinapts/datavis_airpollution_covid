@@ -44,6 +44,7 @@ export default class App extends Component {
               covidData={covidData}
               covidDataForSelectedDay={covidDataForSelectedDay}
               selectedDay={selectedDay}
+              airPollutionData={airPollutionData}
             />
           </div>
         </div>

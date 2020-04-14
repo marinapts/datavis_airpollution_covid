@@ -4,6 +4,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import GoogleMapReact from 'google-map-react'
 
+import './mapContainer.scss'
+
 class GoogleMapContainer extends Component {
   constructor(props) {
     super(props)
@@ -100,7 +102,6 @@ class GoogleMapContainer extends Component {
       panControl: false,
       mapTypeControl: true,
       scrollwheel: true,
-      // styles: [{ stylers: [{ 'saturation': -100 }, { 'gamma': 0.8 }, { 'lightness': 4 }, { 'visibility': 'on' }] }]
       styles: darkMode,
     }
   }
@@ -149,9 +150,10 @@ class GoogleMapContainer extends Component {
   render() {
     const { center, zoom } = this.state
     const heatMapData = this.getHeatmapData(this.props.airPollutionData)
+    const gradient = heatMapData.options.gradient.join(',')
 
     return (
-      <div style={{width: '100%', height: '820px'}}>
+      <div style={{width: '100%', height: '810px'}}>
         <GoogleMapReact
           ref={(el) => this._googleMap = el}
           bootstrapURLKeys={{ key: process.env.REACT_APP_API_KEY, libraries: 'visualization'}}
@@ -173,6 +175,14 @@ class GoogleMapContainer extends Component {
           //   heatmap.setMap(map);
           // }}
         />
+        <div id="legend">
+          <div className="legend-text">Low NO<sub>2</sub> Level (0 ug/m3)</div>
+          <div className="map-legend-colours" style={{background: 'linear-gradient(to right,' + gradient}}></div>
+          <div className="legend-text">High NO<sub>2</sub> Level (125 ug/m3)</div>
+        </div>
+        <div id="title">
+          <h2>NO<sub>2</sub> Levels during the Covid-19 Pandemic in Europe</h2>
+        </div>
       </div>
     )
   }
