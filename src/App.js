@@ -48,6 +48,13 @@ export default class App extends Component {
             />
           </div>
         </div>
+        <div style={{color: 'white'}}>
+          <a
+            style={{color: '#35d8d0'}}
+            target="_blank"
+            href="https://marinapts.github.io/datavis_airpollution_covid/">Here
+          </a> is a description of the visualisation and the sources of the data
+        </div>
         <div className="time-controller">
           <TimeController
             covidData={covidData}

@@ -32,17 +32,7 @@ export default class ChartsContainer extends Component {
   render() {
     const { covidData, covidDataForSelectedDay, selectedDay, airPollutionData } = this.props
     const formattedDays = this.formatDates(Object.keys(covidData))
-    // let cumulativeData = []
     let airPollutionAvg = []
-
-    // for (let day in covidData) {
-    //   if (day !== selectedDay) {
-    //     const sumOverCountries = this.sumCasesOverCountries(covidData[day], 'confirmed')
-    //     cumulativeData.push({day, sum: sumOverCountries})
-    //   } else {
-    //     break
-    //   }
-    // }
 
     for (let day in covidData) {
       if (day !== selectedDay) {

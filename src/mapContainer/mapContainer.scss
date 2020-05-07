@@ -1,22 +1,17 @@
 @import '../variables.scss';
 
 #legend {
-  display: flex;
-  flex-direction: row;
-  margin: -22px;
-  overflow: overlay !important;
-  position: absolute;
-  top: 83%;
-  left: 7%;
-  z-index: 5;
-  background-color: transparent;
-  padding: 20px;
-  text-align: center;
-  font-family: 'Roboto','sans-serif';
-  line-height: 25px;
-  color: white;
-  width: 35%;
-  height: 35px;
+    position: absolute;
+    bottom: 0;
+    left: 10%;
+
+    display: flex;
+    flex-direction: row;
+    width: 60%;
+    background-color: transparent;
+    text-align: left;
+    font-family: "Roboto","sans-serif";
+    color: #fff;
 }
 
 .map-legend-colours {
@@ -31,22 +26,10 @@
 }
 
 #title {
-  display: flex;
-  flex-direction: row;
-  margin: -22px;
-  overflow: overlay !important;
   position: absolute;
-  top: 2%;
-  left: 20%;
-  z-index: 5;
-  background-color: transparent;
-  padding: 5px;
-  text-align: center;
-  font-family: 'Roboto','sans-serif';
-  line-height: 30px;
-  padding-left: 10px;
+  top: 1%;
+  left: 30%;
+  width: 80%;
   color: white;
-  width: 50%;
-  height: 55px;
   text-shadow: 4px 3px $background;
 }
