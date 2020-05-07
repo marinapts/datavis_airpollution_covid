@@ -1,4 +1,4 @@
-# datavis_coronavirus
+# COVID-19 Data - Preprocessing
 
 Navigate to the root folder of the project (datavis_coronavirus)
 and run the following command to download the COVID-19 data:

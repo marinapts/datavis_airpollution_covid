@@ -1,5 +1,6 @@
 ## Interactive Visualisation of Air Pollution in Europe During the COVID-19 Pandemic
 
+Project for the [Data Visualisation](https://datavis2020.github.io/) course at the University of Edinburgh.
 
 ### Description
 In this interactive visualisation project, we present the relationship between the current COVID-19 outbreak
